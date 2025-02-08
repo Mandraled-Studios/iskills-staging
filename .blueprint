@@ -1,0 +1,39 @@
+created:
+    - database/factories/CourseCategoryFactory.php
+    - database/factories/CourseFactory.php
+    - database/factories/ModuleFactory.php
+    - database/factories/PlacementFactory.php
+    - database/factories/GallerySectionFactory.php
+    - database/factories/GalleryPicFactory.php
+    - database/factories/CareerFactory.php
+    - database/factories/JobApplicationFactory.php
+    - database/factories/RelationshipsFactory.php
+    - database/migrations/2024_03_25_095514_create_course_categories_table.php
+    - database/migrations/2024_03_25_095515_create_courses_table.php
+    - database/migrations/2024_03_25_095516_create_modules_table.php
+    - database/migrations/2024_03_25_095517_create_placements_table.php
+    - database/migrations/2024_03_25_095518_create_gallery_sections_table.php
+    - database/migrations/2024_03_25_095519_create_gallery_pics_table.php
+    - database/migrations/2024_03_25_095520_create_careers_table.php
+    - database/migrations/2024_03_25_095521_create_job_applications_table.php
+    - database/migrations/2024_03_25_095522_create_relationships_table.php
+    - app/Models/CourseCategory.php
+    - app/Models/Course.php
+    - app/Models/Module.php
+    - app/Models/Placement.php
+    - app/Models/GallerySection.php
+    - app/Models/GalleryPic.php
+    - app/Models/Career.php
+    - app/Models/JobApplication.php
+    - app/Models/relationships.php
+models:
+    User: { name: string, email: string, email_verified_at: 'datetime nullable', password: string, remember_token: 'string nullable', current_team_id: 'integer nullable', profile_photo_path: 'string nullable', two_factor_secret: 'text nullable', two_factor_recovery_codes: 'text nullable' }
+    CourseCategory: { title: 'string:120', icon: 'string nullable', description: 'text nullable', parent_id: 'integer nullable', softdeletes: softDeletes, relationships: { hasMany: Course } }
+    Course: { title: 'string:255', thumbnail: 'string nullable', hero_image: 'string nullable', description: 'text nullable', seo_title: 'string:120 nullable', meta_description: 'string:160 nullable', course_duration: 'integer nullable', course_duration_unit: 'string:32 nullable', class_duration: 'integer nullable', class_duration_unit: 'string:32 nullable', frequency: 'string:32 nullable', additional_info: 'text nullable', eligibility: 'text nullable', curriculum: 'text nullable', exam_criteria: 'text nullable', certification_authority: 'string nullable', softdeletes: softDeletes, relationships: { belongsTo: CourseCategory, hasMany: 'Module, Enrollment' } }
+    Module: { title: 'string:255', super_header: 'string:120 nullable', sort_order: 'integer unique nullable', softdeletes: softDeletes, relationships: { belongsTo: Course } }
+    Placement: { title: 'string:255', placement_date: 'date nullable', date_format: 'string:32 default:"Month YYYY"', company_name: 'string:255 nullable', company_logo_image: 'string:255 nullable', students_image: 'string nullable', publish_status: 'boolean default:false', softdeletes: softDeletes }
+    GallerySection: { title: 'string:255', sort_order: 'integer unique nullable', softdeletes: softDeletes, relationships: { hasMany: GalleryPic } }
+    GalleryPic: { image: string, sort_order: 'integer unique nullable', softdeletes: softDeletes, relationships: { belongsTo: GallerySection } }
+    Career: { designation: 'string:255', vacancies: 'integer nullable', salary: 'string nullable', description: 'text nullable', requirements: 'text nullable', skillset: 'text nullable', job_location: 'string:255 nullable', softdeletes: softDeletes, relationships: { hasMany: JobApplication } }
+    JobApplication: { full_name: 'string:160', email: 'string:255', phone: 'string:15', alternate_phone: 'string:15 nullable', pincode: integer, state: 'string:64', city: 'string:64', region: 'string:64', house_no: 'string:64', qualification: 'string:255', certifications: 'string:255 nullable', desired_position: 'string:255', experience_in_years: 'string:64', resume: 'string nullable' }
+    relationships: { belongsTo: Career }
